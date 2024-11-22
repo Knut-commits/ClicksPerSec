@@ -42,6 +42,10 @@ public class GamePanel extends JPanel implements ActionListener {
 	    timerLabel.setBounds(10,10,100,30); // positions the label in the screen
 	    this.add(timerLabel);
 	    
+        clickButton = new JButton("click me"); // adds the button to be clicked to move player
+        clickButton.setBounds(250,10,100,30);// sets position of clickbutton.
+        clickButton.addActionListener(e - > handleClick()); // the action listener will handle each click.
+
 	    
 	
 	
