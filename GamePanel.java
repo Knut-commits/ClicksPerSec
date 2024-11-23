@@ -78,9 +78,32 @@ public class GamePanel extends JPanel implements ActionListener {
 		g.setFont(new Font("Arial", Font.BOLD, 40)); // the font ensure our sprite is desired style and size
 		g.drawString("🏃", player.getX(), player.getY()); // i will most likely create an actual sprite for the player with running animation but for now im keeping it an emoji.
 		for(NPC npc : npcs) {
-			g.drawString()
+			g.drawString("🤖", npc.getX(), npc.getY()); // loops though npc list and prints each one
 		}
 	}
+	@Override
+	public void actionPerformed(ActionEvent e) { // use this whenever an action event occurs suhc as clicking a button
+		if(timeLeft > 0) {
+			timeLeft --; // decrease time by 1
+			timerLabel.setText("Time Left: " + timeLeft);
+
+		
+			// we need to move NPCs now
+			for( NPC npc : npcs) {
+				npc.move();
+			}
+
+			repaint();
+		}
+		else{
+			gameTimer.stop(); 
+			clickButton.setEnabled(false);// this means button can no longer be clicked because game is over
+
+		}	
+
+
+	}
+
 		
 
 	
