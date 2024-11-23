@@ -36,7 +36,12 @@ public class GamePanel extends JPanel implements ActionListener {
 	    player = new Player(10,150,10);// sets its starting position and how many pixels it moves per click
 	    timeLeft = Game_time;
 	    
-	    background = ImageIO.read(new File("background.jpg")); // will load a chosen image as the background
+	    try {
+			background = ImageIO.read(new File("Background.jpg"));
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		} // will load a chosen image as the background
 	    backgroundX = 0;
 	    
 	    timerLabel =  new JLabel("Time left:" + timeLeft); // this adds a label (pop up) that shows how much time is left(updates every second)
@@ -51,7 +56,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         clickButton = new JButton("click me"); // adds the button to be clicked to move player
         clickButton.setBounds(250,10,100,30);// sets position of clickbutton.
-        clickButton.addActionListener(e - > handleClick()); // the action listener will handle each click.
+        clickButton.addActionListener(e -> handleClick()); // the action listener will handle each click.
         
 		Random rand = new Random(); // this the isntance of teh random class
 	    // intiliaize the NPCs
@@ -63,7 +68,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         gameTimer = new Timer(timer_delay,this);// creates the timer and we use this to refer the current instance of the class
 	    gameTimer.start(); // action listener will handle the timers events.
-		
+	}	
 	private void handleClick() {// this method is private as it is not relevent for external use.
 		player.move( );
 		distance = player.getX() * 0.01; // each pixel represnts 0.01 metres
@@ -74,7 +79,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	protected void paintComponent(Graphics g) { // this method will paint the games "screen" its protected so subclasses can inherit and pottentially override methods.
 		super.paintComponent(g);
 		g.drawImage(background, backgroundX, 0 , this); //draws first part of background
-		g.drawImage(background,backgroundX + background.getWidth(), 0 , this)// loops background to give scorlling affect
+		g.drawImage(background,backgroundX + background.getWidth(), 0 , this);// loops background to give scorlling affect
 		g.setFont(new Font("Arial", Font.BOLD, 40)); // the font ensure our sprite is desired style and size
 		g.drawString("🏃", player.getX(), player.getY()); // i will most likely create an actual sprite for the player with running animation but for now im keeping it an emoji.
 		for(NPC npc : npcs) {
@@ -98,7 +103,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		else{
 			gameTimer.stop(); 
 			clickButton.setEnabled(false);// this means button can no longer be clicked because game is over
-
+			timerLabel.setText("Time's up!");
 		}	
 
 

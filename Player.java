@@ -1,5 +1,7 @@
 public class Player  extends Entity{// this class inherits the Entity class which means we can use entitys methods.
+	@SuppressWarnings("unused")
 	private int x;
+	@SuppressWarnings("unused")
 	private int y;
 	final int moveDistance;// how many pixels it moves per click
 	

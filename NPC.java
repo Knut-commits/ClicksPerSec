@@ -1,5 +1,7 @@
 public class NPC  extends Entity {//this class inherits the Entity class which means we can use entitys methods
-	private int x;
+	@SuppressWarnings("unused")
+	private  int x ;
+	@SuppressWarnings("unused") // im adding supressed warning as it is a quick fix becaus eit keeps saying these variable are not bieng used.
 	private int y;
 	private int speed;
 	
