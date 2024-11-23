@@ -46,7 +46,12 @@ public class GamePanel extends JPanel implements ActionListener {
         clickButton.setBounds(250,10,100,30);// sets position of clickbutton.
         clickButton.addActionListener(e - > handleClick()); // the action listener will handle each click.
 
-	    
+	    // intiliaize the NPCs
+		for( int i = 0 ; i < 3; i ++){ // we are going to be adding 3 NPC to the game
+			int startY = 100 + i* 50; // this will posiiton the npcs along differnet points of the vertical axis
+			int speed = 5 + random.nextInt(6); // randomizes speed of NPCs so eahc will have a differnet speed
+			npcs.add(new NPC(10,startY,speed));//each npcs as same starting X positon but different everything else
+		}
 	
 	
 	
