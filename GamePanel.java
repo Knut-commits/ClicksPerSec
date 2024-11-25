@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	private static final int panel_width= 600; 
 	private static final int panel_height = 400;// this is going to be the the size of the game 600 x 400 pixels
 	private static final int timer_delay= 1000; // milliseconds the game timer checks every 1000 miliseconds
-	private static final int Game_time = 10; // seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
+	private static final int Game_time = 20; // seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
 	
 	private Player player; // using how player class
 	private int timeLeft;
@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	    try {
 			background = ImageIO.read(new File("Background.jpg"));
 		} catch (IOException e) {
-			
+			System.out.println("heres error");
 			e.printStackTrace();
 		} // will load a chosen image as the background
 	    backgroundX = 0;
@@ -50,18 +50,20 @@ public class GamePanel extends JPanel implements ActionListener {
          
 		distance = 0;
 		distanceLabel = new JLabel ("Distance covered: " + distance + "m");// new label that shows the distance player moves
-	    distanceLabel.setBounds(120,10,100,30);
+	    distanceLabel.setBounds(120,10,300,30);
 		this.add(distanceLabel);
 
 
         clickButton = new JButton("click me"); // adds the button to be clicked to move player
-        clickButton.setBounds(250,10,100,30);// sets position of clickbutton.
+        clickButton.setBounds(500,10,100,30);// sets position of clickbutton.
         clickButton.addActionListener(e -> handleClick()); // the action listener will handle each click.
-        
+        this.add(clickButton);
+
 		Random rand = new Random(); // this the isntance of teh random class
+		npcs = new ArrayList<NPC>();
 	    // intiliaize the NPCs
 		for( int i = 0 ; i < 3; i ++){ // we are going to be adding 3 NPC to the game
-			int startY = 100 + i* 50; // this will posiiton the npcs along differnet points of the vertical axis
+			int startY = 200 + i* 50; // this will posiiton the npcs along differnet points of the vertical axis
 			int speed = 5 + rand.nextInt(6); // randomizes speed of NPCs so eahc will have a differnet speed
 			npcs.add(new NPC(10,startY,speed));//each npcs as same starting X positon but different everything else
 		}
@@ -72,7 +74,9 @@ public class GamePanel extends JPanel implements ActionListener {
 	private void handleClick() {// this method is private as it is not relevent for external use.
 		player.move( );
 		distance = player.getX() * 0.01; // each pixel represnts 0.01 metres
+		System.out.println("Player X position: " + player.getX());
 		distanceLabel.setText("distance covered: " + distance + "m");
+		System.out.println("Distance covered: " + distance);
 		repaint(); // this will re do the "screen" of the game so that the sprites can move
 	}	
 	@Override // method is intended to override a method in its super class however if it doesnt the compiler will generate a mistake
