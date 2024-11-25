@@ -12,10 +12,10 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
      
-	private static final int panel_width= 600; 
+	private static final int panel_width= 630; 
 	private static final int panel_height = 400;// this is going to be the the size of the game 600 x 400 pixels
-	private static final int timer_delay= 1000; // milliseconds the game timer checks every 1000 miliseconds
-	private static final int Game_time = 10; // seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
+	private static final int timer_delay= 500; // milliseconds the game timer checks every 1000 miliseconds
+	private static final int Game_time = 60; // half seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
 	
 	private Player player; // using how player class
 	private int timeLeft;
@@ -45,12 +45,12 @@ public class GamePanel extends JPanel implements ActionListener {
 	    backgroundX = 0;
 	    
 	    timerLabel =  new JLabel("Time left:" + timeLeft); // this adds a label (pop up) that shows how much time is left(updates every second)
-	    timerLabel.setBounds(10,10,100,30); // positions the label in the screen
+	    timerLabel.setBounds(10,10,200,30); // positions the label in the screen
 	    this.add(timerLabel);
          
 		distance = 0;
 		distanceLabel = new JLabel ("Distance covered: " + distance + "m");// new label that shows the distance player moves
-	    distanceLabel.setBounds(120,10,300,30);
+	    distanceLabel.setBounds(200,10,300,30);
 		this.add(distanceLabel);
 
 
@@ -64,7 +64,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	    // intiliaize the NPCs
 		for( int i = 0 ; i < 4; i ++){ // we are going to be adding 4 NPC to the game
 			int startY = 200 + i* 50; // this will posiiton the npcs along differnet points of the vertical axis
-			int speed = 5 + rand.nextInt(30); // randomizes speed of NPCs so eahc will have a differnet speed
+			int speed = 5 + rand.nextInt(10); // randomizes speed of NPCs so eahc will have a differnet speed
 			npcs.add(new NPC(10,startY,speed));//each npcs as same starting X positon but different everything else
 		}
 
@@ -92,7 +92,12 @@ public class GamePanel extends JPanel implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) { // use this whenever an action event occurs suhc as clicking a button
-		if(timeLeft > 0) {
+		if(player.getX() ==  600 || player.getX() > 600){
+			gameTimer.stop(); 
+			clickButton.setEnabled(false);// this means button can no longer be clicked because game is over
+			timerLabel.setText("You reach the end");
+		}
+		else if(timeLeft > 0) {
 			timeLeft --; // decrease time by 1
 			timerLabel.setText("Time Left: " + timeLeft);
 
