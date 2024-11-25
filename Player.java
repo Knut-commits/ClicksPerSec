@@ -18,5 +18,13 @@ public class Player  extends Entity{// this class inherits the Entity class whic
 		x += moveDistance;
 		System.out.println("Player moved to: " + x); // Debug output
 	}
+	
+	public int getX() {
+		return x;
+	}
+	public int getY()
+	{
+		return y;
+	}
 
 }

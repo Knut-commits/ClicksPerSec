@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	private static final int panel_width= 600; 
 	private static final int panel_height = 400;// this is going to be the the size of the game 600 x 400 pixels
 	private static final int timer_delay= 1000; // milliseconds the game timer checks every 1000 miliseconds
-	private static final int Game_time = 20; // seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
+	private static final int Game_time = 10; // seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
 	
 	private Player player; // using how player class
 	private int timeLeft;
@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	    this.setLayout(null);// empty layout
 	    this.setBackground(Color.LIGHT_GRAY); // sets background colour to gray.
 	    
-	    player = new Player(10,150,10);// sets its starting position and how many pixels it moves per click
+	    player = new Player(10,150,5);// sets its starting position and how many pixels it moves per click
 	    timeLeft = Game_time;
 	    
 	    try {
@@ -62,9 +62,9 @@ public class GamePanel extends JPanel implements ActionListener {
 		Random rand = new Random(); // this the isntance of teh random class
 		npcs = new ArrayList<NPC>();
 	    // intiliaize the NPCs
-		for( int i = 0 ; i < 3; i ++){ // we are going to be adding 3 NPC to the game
+		for( int i = 0 ; i < 4; i ++){ // we are going to be adding 4 NPC to the game
 			int startY = 200 + i* 50; // this will posiiton the npcs along differnet points of the vertical axis
-			int speed = 5 + rand.nextInt(6); // randomizes speed of NPCs so eahc will have a differnet speed
+			int speed = 5 + rand.nextInt(30); // randomizes speed of NPCs so eahc will have a differnet speed
 			npcs.add(new NPC(10,startY,speed));//each npcs as same starting X positon but different everything else
 		}
 
@@ -73,7 +73,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	}	
 	private void handleClick() {// this method is private as it is not relevent for external use.
 		player.move( );
-		distance = player.getX() * 0.01; // each pixel represnts 0.01 metres
+		distance = player.getX() * 0.1; // each pixel represnts 0.1 metres
 		System.out.println("Player X position: " + player.getX());
 		distanceLabel.setText("distance covered: " + distance + "m");
 		System.out.println("Distance covered: " + distance);

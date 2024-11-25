@@ -17,4 +17,12 @@ public class NPC  extends Entity {//this class inherits the Entity class which m
 		x += speed; //this will move the npc when needed.
 		System.out.println("NPC moved to: " + x); // Debug output
 	}
+	
+	public int getX() {
+		return x;
+	}
+	public int getY()
+	{
+		return y;
+	}
 }
