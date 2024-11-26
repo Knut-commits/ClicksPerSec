@@ -14,8 +14,8 @@ public class GamePanel extends JPanel implements ActionListener {
      
 	private static final int panel_width= 630; 
 	private static final int panel_height = 400;// this is going to be the the size of the game 600 x 400 pixels
-	private static final int timer_delay= 500; // milliseconds the game timer checks every 1000 miliseconds
-	private static final int Game_time = 60; // half seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
+	private static final int timer_delay= 200; // milliseconds the game timer checks every 1000 miliseconds
+	private static final int Game_time = 120; // quarter seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
 	
 	private Player player; // using how player class
 	private int timeLeft;
@@ -27,6 +27,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	private BufferedImage background;
 	private int backgroundX;
 	private double distance;
+	private BufferedImage playerSprite;
+    private BufferedImage npcSprite;
 	
 	public GamePanel() {
 	    this.setPreferredSize(new Dimension(panel_width, panel_height)); // this method is inheirted from Jpanel
@@ -37,6 +39,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	    timeLeft = Game_time;
 	    
 	    try {
+			playerSprite = ImageIO.read(new File("bike.PNG"));
+			npcSprite = ImageIO.read(new File("NPC.PNG"));
 			background = ImageIO.read(new File("Background.jpg"));
 		} catch (IOException e) {
 			System.out.println("heres error");
@@ -64,7 +68,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	    // intiliaize the NPCs
 		for( int i = 0 ; i < 4; i ++){ // we are going to be adding 4 NPC to the game
 			int startY = 200 + i* 50; // this will posiiton the npcs along differnet points of the vertical axis
-			int speed = 5 + rand.nextInt(10); // randomizes speed of NPCs so eahc will have a differnet speed
+			int speed = 3 + rand.nextInt(4); // randomizes speed of NPCs so eahc will have a differnet speed
 			npcs.add(new NPC(10,startY,speed));//each npcs as same starting X positon but different everything else
 		}
 
@@ -84,10 +88,9 @@ public class GamePanel extends JPanel implements ActionListener {
 		super.paintComponent(g);
 		g.drawImage(background, backgroundX, 0 , this); //draws first part of background
 		g.drawImage(background,backgroundX + background.getWidth(), 0 , this);// loops background to give scorlling affect
-		g.setFont(new Font("Arial", Font.BOLD, 40)); // the font ensure our sprite is desired style and size
-		g.drawString("🏃", player.getX(), player.getY()); // i will most likely create an actual sprite for the player with running animation but for now im keeping it an emoji.
+		g.drawImage( playerSprite, player.getX(), player.getY(),40,40,this); // heres teh sprite with its size.
 		for(NPC npc : npcs) {
-			g.drawString("🤖", npc.getX(), npc.getY()); // loops though npc list and prints each one
+			g.drawImage( npcSprite , npc.getX(), npc.getY(),40,40,this); // loops though npc list and prints each one
 		}
 	}
 	@Override
