@@ -39,9 +39,9 @@ public class GamePanel extends JPanel implements ActionListener {
 	    timeLeft = Game_time;
 	    
 	    try {
-			playerSprite = ImageIO.read(new File("bike.PNG"));
+			playerSprite = ImageIO.read(new File("bike.PNG"));// our player sprite
 			npcSprite = ImageIO.read(new File("NPC.PNG"));
-			background = ImageIO.read(new File("Background.jpg"));
+			background = ImageIO.read(new File("Background.jpg"));//our npc sprite
 		} catch (IOException e) {
 			System.out.println("heres error");
 			e.printStackTrace();
