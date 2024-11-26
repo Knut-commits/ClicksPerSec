@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	private static final int panel_width= 630; 
 	private static final int panel_height = 400;// this is going to be the the size of the game 600 x 400 pixels
 	private static final int timer_delay= 200; // milliseconds the game timer checks every 1000 miliseconds
-	private static final int Game_time = 120; // quarter seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
+	private static final int Game_time = 150; // quarter seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
 	
 	private Player player; // using how player class
 	private int timeLeft;
@@ -73,14 +73,17 @@ public class GamePanel extends JPanel implements ActionListener {
 		}
 
         gameTimer = new Timer(timer_delay,this);// creates the timer and we use this to refer the current instance of the class
-	    gameTimer.start(); // action listener will handle the timers events.
+	    
 	}	
 	private void handleClick() {// this method is private as it is not relevent for external use.
+		if( gameTimer.isRunning() ==false){
+			gameTimer.start(); // i start the timer once teh button is clicked // action listener will handle the timers events.
+		}
 		player.move( );
 		distance = player.getX() * 0.1; // each pixel represnts 0.1 metres
-		System.out.println("Player X position: " + player.getX());
+		//System.out.println("Player X position: " + player.getX());
 		distanceLabel.setText("distance covered: " + distance + "m");
-		System.out.println("Distance covered: " + distance);
+		//System.out.println("Distance covered: " + distance);
 		repaint(); // this will re do the "screen" of the game so that the sprites can move
 	}	
 	@Override // method is intended to override a method in its super class however if it doesnt the compiler will generate a mistake
@@ -93,12 +96,30 @@ public class GamePanel extends JPanel implements ActionListener {
 			g.drawImage( npcSprite , npc.getX(), npc.getY(),40,40,this); // loops though npc list and prints each one
 		}
 	}
+
+	public int FindFastestNPC(){
+		int max = 0;
+		for(NPC npc : npcs)// searches through npc list
+		{
+			if(npc.getX() > max){
+				max = npc.getX(); // max is going to be largest npc x coordinate
+			}
+
+		}
+		return max;
+	} 
 	@Override
 	public void actionPerformed(ActionEvent e) { // use this whenever an action event occurs suhc as clicking a button
 		if(player.getX() ==  600 || player.getX() > 600){
 			gameTimer.stop(); 
 			clickButton.setEnabled(false);// this means button can no longer be clicked because game is over
-			timerLabel.setText("You reach the end");
+			if(player.getX() > FindFastestNPC()){
+				timerLabel.setText("You won");
+			}
+			else{
+				timerLabel.setText("You Lost");
+			}
+				
 		}
 		else if(timeLeft > 0) {
 			timeLeft --; // decrease time by 1
@@ -106,16 +127,19 @@ public class GamePanel extends JPanel implements ActionListener {
 
 		
 			// we need to move NPCs now
+		
+
+				
 			for( NPC npc : npcs) {
 				npc.move();
 			}
-
+			
 			repaint();
 		}
 		else{
 			gameTimer.stop(); 
 			clickButton.setEnabled(false);// this means button can no longer be clicked because game is over
-			timerLabel.setText("Time's up!");
+			timerLabel.setText("Time's up!, You Lost");
 		}	
 
 

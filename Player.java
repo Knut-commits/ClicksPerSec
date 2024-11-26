@@ -16,7 +16,7 @@ public class Player  extends Entity{// this class inherits the Entity class whic
 	public void move() // this will be used to move the pos and distance of the player each click.
 	{
 		x += moveDistance;
-		System.out.println("Player moved to: " + x); // Debug output
+		//System.out.println("Player moved to: " + x); // Debug output
 	}
 	
 	public int getX() {
