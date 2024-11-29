@@ -18,9 +18,9 @@ public class GamePanel extends JPanel implements ActionListener {
 	private static final int Game_time = 150; // quarter seconds  // variables are static and final as I want them to be constant for each game and unchangeable.
 	
 	private Player player; // using how player class
-	private int timeLeft;
+	private int timeLeft; 
 	private ArrayList<NPC> npcs;  // list that will hold the npcs.
-	private Timer gameTimer;
+	private  Timer gameTimer;
 	private JLabel timerLabel; // from java swing
 	private JLabel distanceLabel; // from java swing
 	private JButton clickButton; // java swing
@@ -29,6 +29,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	private double distance;
 	private BufferedImage playerSprite;
     private BufferedImage npcSprite;
+	private int Score;
+	
 	
 	public GamePanel() {
 	    this.setPreferredSize(new Dimension(panel_width, panel_height)); // this method is inheirted from Jpanel
@@ -38,6 +40,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	    player = new Player(10,150,5);// sets its starting position and how many pixels it moves per click
 	    timeLeft = Game_time;
 	    
+		Score = 0;
 	    try {
 			playerSprite = ImageIO.read(new File("bike.PNG"));// our player sprite
 			npcSprite = ImageIO.read(new File("NPC.PNG"));
@@ -68,7 +71,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	    // intiliaize the NPCs
 		for( int i = 0 ; i < 4; i ++){ // we are going to be adding 4 NPC to the game
 			int startY = 200 + i* 50; // this will posiiton the npcs along differnet points of the vertical axis
-			int speed = 3 + rand.nextInt(4); // randomizes speed of NPCs so eahc will have a differnet speed
+			int speed = 3 + rand.nextInt(5); // randomizes speed of NPCs so eahc will have a differnet speed
 			npcs.add(new NPC(10,startY,speed));//each npcs as same starting X positon but different everything else
 		}
 
@@ -112,7 +115,14 @@ public class GamePanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) { // use this whenever an action event occurs suhc as clicking a button
 		if(player.getX() ==  600 || player.getX() > 600){
 			gameTimer.stop(); 
+			Score = Game_time - timeLeft;
+			
+			
 			clickButton.setEnabled(false);// this means button can no longer be clicked because game is over
+			LeaderBoard board =  new LeaderBoard(); // create an instance of leaderboard.
+
+			board.saveScore("knut" , Score);// saves the score to leadeboard file
+			
 			if(player.getX() > FindFastestNPC()){
 				timerLabel.setText("You won");
 			}
@@ -140,7 +150,15 @@ public class GamePanel extends JPanel implements ActionListener {
 			gameTimer.stop(); 
 			clickButton.setEnabled(false);// this means button can no longer be clicked because game is over
 			timerLabel.setText("Time's up!, You Lost");
+			Score = Game_time - timeLeft;
+			    
+			LeaderBoard board =  new LeaderBoard(); // create an instance of leaderboard.
+
+			board.saveScore("knut" , Score);// saves the score to leadeboard file
+
 		}	
+		
+
 
 
 	}
