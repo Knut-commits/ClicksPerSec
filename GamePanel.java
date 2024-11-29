@@ -122,7 +122,7 @@ public class GamePanel extends JPanel implements ActionListener {
 			LeaderBoard board =  new LeaderBoard(); // create an instance of leaderboard.
 
 			board.saveScore("knut" , Score);// saves the score to leadeboard file
-			
+			board.sortLeaderboard();
 			if(player.getX() > FindFastestNPC()){
 				timerLabel.setText("You won");
 			}
@@ -155,7 +155,7 @@ public class GamePanel extends JPanel implements ActionListener {
 			LeaderBoard board =  new LeaderBoard(); // create an instance of leaderboard.
 
 			board.saveScore("knut" , Score);// saves the score to leadeboard file
-
+			board.sortLeaderboard();
 		}	
 		
 
